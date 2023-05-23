@@ -1,0 +1,109 @@
+<!doctype html>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='main.js')}}" defer></script>
+
+
+<HEAD>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+
+        form {
+          /* Just to center the form on the page */
+          margin: 0 auto;
+          width: 400px;
+          /* To see the outline of the form */
+          padding: 1em;
+          border: 1px solid #CCC;
+          border-radius: 1em;
+        }
+
+        form div + div {
+          margin-top: 1em;
+        }
+
+        label {
+          /* To make sure that all labels have the same size and are properly aligned */
+          display: inline-block;
+          width: 90px;
+          text-align: right;
+        }
+
+        input, textarea {
+          /* To make sure that all text fields have the same font settings
+             By default, textareas have a monospace font */
+          font: 1em sans-serif;
+
+          /* To give the same size to all text fields */
+          width: 800px;
+          box-sizing: border-box;
+
+          /* To harmonize the look & feel of text field border */
+          border: 1px solid #999;
+        }
+
+        input:focus, textarea:focus {
+          /* To give a little highlight on active elements */
+          border-color: #000;
+        }
+
+        textarea {
+          /* To properly align multiline text fields with their labels */
+          vertical-align: top;
+
+          /* To give enough room to type some text */
+          height: 10em;
+        }
+
+        #logo {
+        margin: 0 auto;
+        width: 400px;
+        }
+
+
+
+    </style>
+</HEAD>
+
+<h1 align="center"> tenseflow </h1>
+
+<form class="pure-form pure-form-aligned" method="post" action="{{ url_for('result') }}">
+    <textarea id="text" name="input_text" class="pure-input-1-2" placeholder="enter text here" style="width:100%;">{{ text_in }}</textarea>
+    <div class="pure-control-group">
+        <button type="submit" name="main" class="pure-button pure-button-primary" style="width:50%;">Change tense!</button>
+
+        <select name="tense" style="width:30%;">
+            <option>past</option>
+            <option>present</option>
+            <option>future</option>
+        </select>
+
+    </div>
+
+    <h2>Result</h2>
+    <p>{{ text_out }}</p>
+    {% if text_out %}
+        <input type="checkbox" name="errortick" value="1" /> This is incorrect<br>
+
+        <div class="report_error" style=display:none;>
+            <textarea id="correction" name="correction" class="pure-input-1-2" placeholder="enter correct output here" style="width:100%;"></textarea>
+            <button type="submit" name="correction" class="pure-button button-error" style="width:50%;">Submit correction</button>
+        </div>
+    {% endif %}
+</form>
+
+
+<div id="logo">
+<a href="https://github.com/bendichter/past_maker">
+    <img src="{{ url_for('static', filename='github-logo.svg') }}" width="50">
+</a>
+</div>
+
+
+
+
