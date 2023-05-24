@@ -1,44 +1,29 @@
-# tenseflow
-tenseflow automatically changes the tense of any English text.
+# pastmaker
+pastmaker is based on tenseflow by @bendichter and automatically changes the tense of any English text from present and future tense to past tense
 
-<img src="static/screenshot.png" width="350">
 
 ## Features
-- change to `'past'`, `'present'`, or `'future'` tense
-- includes web app
-
+- change text from `'present'`- or `'future'` tense to `'past'` tense
 
 ## Installation
 
-Unfortunately, the package is only compatible with python 2.7 and 3.6.
-
 Install this package
 ```
-git clone https://github.com/bendichter/tenseflow.git
-cd tenseflow
+git clone https://github.com/sophiecodes42/pastmaker.git
+cd pastmaker
 pip install .
 ```
-download default English SpaCy model
+Install requirements
 ```
-sudo python -m spacy download en
+pip install -r requirements.txt
 ```
 
 ## Usage
 Basic usage
 ```python
-from tenseflow import past_maker
+from pastmaker import pastmaker
 
-past_maker('I will go to the store.', 'past')
+pastmaker('I will go to the store.')
 u'I went to the store.'
 ```
 
-Run web app
-```
-export FLASK_APP=app.py
-flask run
-```
-
-## Testing
-[![Build Status](https://travis-ci.org/bendichter/tenseflow.png?branch=master)](https://travis-ci.org/bendichter/tenseflow)
-
-To test, install pytest with `pip install pytest`, then run `pytest` from within the tenseflow directory.
