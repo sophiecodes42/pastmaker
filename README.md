@@ -24,6 +24,6 @@ Basic usage
 from pastmaker import pastmaker
 
 pastmaker('I will go to the store.')
-u'I went to the store.'
+u' "I will go to the store. => I went to the store.'
 ```
 

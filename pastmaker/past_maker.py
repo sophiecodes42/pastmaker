@@ -3,6 +3,9 @@
 import re
 
 import spacy
+import en_core_web_sm as nlp_small
+import en_core_web_trf as nlp_big
+
 from pattern.text.en import (
     INDICATIVE,
     PAST,
@@ -25,10 +28,6 @@ from spacy.tokenizer import Tokenizer
 from spacy.tokens.doc import Doc
 from spacy.tokens.token import Token
 from spacy.util import compile_infix_regex
-
-# small language model for sentence tokenizing:
-nlp_small = spacy.load("en_core_web_sm")
-nlp_big = spacy.load("en_core_web_trf")
 
 SUBJ_DEPS = {'agent', 'csubj', 'csubjpass', 'expl', 'nsubj', 'nsubjpass'}
 TEMPORAL_REPLACEMENTS_DIC = {"currently": "at the time", "Currently": "At the time", "now": "then", "Now": "Then"} #Todo create constants file and dictionary for replacements
@@ -87,7 +86,7 @@ def preserve_caps(word, newWord):
         newWord = newWord.capitalize()
     return newWord
 
-def past_maker(input_text: Doc):
+def past_maker(input_text: str):
     """Change the tense of text.
 
     Todo:
@@ -116,7 +115,6 @@ def past_maker(input_text: Doc):
     pattern_stopiteration_workaround()
     for sent in nlp_small(input_text).sents:
         sent = nlp_big(sent.text)
-        # print([(word.text, word.tag_, word.morph) for word in sent])
         out.append(sent[0].text)
         words = []
         head_conjuncts = {"head": None, "conjunct_verbs": []}
@@ -149,7 +147,7 @@ def past_maker(input_text: Doc):
                 out.append(words[-1].text)
                 continue
 
-            # change future tense (line 215 & line 217) and present tense (line 216) to past tense
+            # change future tense and present tense to past tense
             if (
                 (is_will(words[-2]) and words[-2].tag_ == "MD" and words[-1].tag_ == "VB")
                 or (
@@ -284,10 +282,9 @@ def past_maker(input_text: Doc):
 
     text_out = " ".join(out)
 
-    # #   Writing tense Changes to txt file for debugging purpose!
-    # if changes:
-    #     for change in changes:
-    #         print(change[0] + " => " + change[1] + "\n")
+    if changes:
+        for change in changes:
+            print(change[0] + " => " + change[1] + "\n")
 
     return text_out + " ", changes
 
