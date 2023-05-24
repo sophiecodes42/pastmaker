@@ -1,3 +1,5 @@
+#Todo: need to add function to test pastmaker e.g. from console or for files
+
 import re
 
 import spacy
